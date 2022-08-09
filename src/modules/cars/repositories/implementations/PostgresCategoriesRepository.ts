@@ -1,7 +1,7 @@
 //Apenas simulando como funcionaria a substituição do banco de dados a partir de uma interface estabelecida
 
 import { ICategoryRepository, ICreateCategoryDTO } from "../ICategoryRepository";
-import { Category } from "../../models/Category"
+import { Category } from "../../entities/Category"
 
 class PostgressCategoriesRepository implements ICategoryRepository{
     findByName(name: string): Category {
