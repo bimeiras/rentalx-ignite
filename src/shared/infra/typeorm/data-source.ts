@@ -7,6 +7,8 @@ import { User } from "../../../modules/accounts/infra/typeorm/entities/User";
 import { CreateUsers1660133651430 } from "./migrations/1660133651430-CreateUsers";
 import { AlterUserDeleteUsername1660215562252 } from "./migrations/1660215562252-AlterUserDeleteUsername";
 import { AlterUserAddAvatar1660324763151 } from "./migrations/1660324763151-AlterUserAddAvatar";
+import { CreateCars1660736040272 } from "./migrations/1660736040272-CreateCars";
+import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 export const dataSource = new DataSource({
     type: "postgres",
@@ -18,14 +20,16 @@ export const dataSource = new DataSource({
     entities: [
       Category,
       Specification,
-      User
+      User,
+      Car
     ],
     migrations: [
         CreateCategories1659956872005,
         CreateSpecifications1660130872589,
         CreateUsers1660133651430,
         AlterUserDeleteUsername1660215562252,
-        AlterUserAddAvatar1660324763151
+        AlterUserAddAvatar1660324763151,
+        CreateCars1660736040272,
     ],
   });
 
