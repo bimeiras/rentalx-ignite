@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid"
 import { hash } from "bcryptjs"
 
-import createConnection from "../index"
+import { createConnection } from "../data-source"
 
 async function create() {
     const connection = await createConnection("localhost")
@@ -11,9 +11,11 @@ async function create() {
 
     await connection.query(
         `INSERT INTO USERS(id, name, email, password, "isAdmin", created_at, driver_license)
-            values('${id}, 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'XXXXXX' )
+            values('${id}', 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'XXXXXX' )
         `
     )
+
+    await connection.destroy();
 }
 
 create().then(() => {
