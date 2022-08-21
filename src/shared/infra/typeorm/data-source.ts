@@ -9,6 +9,7 @@ import { AlterUserDeleteUsername1660215562252 } from "./migrations/1660215562252
 import { AlterUserAddAvatar1660324763151 } from "./migrations/1660324763151-AlterUserAddAvatar";
 import { CreateCars1660736040272 } from "./migrations/1660736040272-CreateCars";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
+import { CreateSpecificationsCars1661015773997 } from "./migrations/1661015773997-CreateSpecificationsCars";
 
 export const dataSource = new DataSource({
     type: "postgres",
@@ -30,6 +31,7 @@ export const dataSource = new DataSource({
         AlterUserDeleteUsername1660215562252,
         AlterUserAddAvatar1660324763151,
         CreateCars1660736040272,
+        CreateSpecificationsCars1661015773997
     ],
   });
 
