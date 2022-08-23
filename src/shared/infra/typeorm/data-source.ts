@@ -44,5 +44,8 @@ export const dataSource = new DataSource({
   });
 
 export function createConnection(host = "database"): Promise<DataSource> {
-    return dataSource.setOptions({ host }).initialize();
+    return dataSource.setOptions({
+      host: process.env.NODE_ENV === "test" ? "localhost" : host,
+      database: process.env.NODE_ENV === "test" ? "rentx_test" : dataSource.options.database as string,
+    }).initialize();
 }
