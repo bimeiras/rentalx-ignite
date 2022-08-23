@@ -10,6 +10,8 @@ import { AlterUserAddAvatar1660324763151 } from "./migrations/1660324763151-Alte
 import { CreateCars1660736040272 } from "./migrations/1660736040272-CreateCars";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { CreateSpecificationsCars1661015773997 } from "./migrations/1661015773997-CreateSpecificationsCars";
+import { CreateCarImages1661210336735 } from "./migrations/1661210336735-CreateCarImages";
+import { CarImage } from "@modules/cars/infra/typeorm/entities/CarImage";
 
 export const dataSource = new DataSource({
     type: "postgres",
@@ -22,7 +24,8 @@ export const dataSource = new DataSource({
       Category,
       Specification,
       User,
-      Car
+      Car,
+      CarImage
     ],
     migrations: [
         CreateCategories1659956872005,
@@ -31,7 +34,8 @@ export const dataSource = new DataSource({
         AlterUserDeleteUsername1660215562252,
         AlterUserAddAvatar1660324763151,
         CreateCars1660736040272,
-        CreateSpecificationsCars1661015773997
+        CreateSpecificationsCars1661015773997,
+        CreateCarImages1661210336735
     ],
   });
 
