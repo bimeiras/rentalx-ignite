@@ -7,7 +7,7 @@ let carsRepositoryInMemory: CarsRepositoryInMemory
 
 
 describe("Create car", () => {
-    beforeEach( () => {
+    beforeEach(() => {
         carsRepositoryInMemory = new CarsRepositoryInMemory()
         createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory)
     })
@@ -23,36 +23,36 @@ describe("Create car", () => {
             category_id: "category"
         })
 
-        
+
         expect(car).toHaveProperty("id")
     });
 
     it("should not be able to create a car when license plate is already taken", async () => {
-        expect(async() => { 
-            await createCarUseCase.execute({
-                name: "Same Car",
-                description: "Same Description",
-                daily_rate: 100,
-                license_plate: "ABC-1234",
-                fine_amount: 60,
-                brand: "Same Brand",
-                category_id: "category"
-            })
 
-            await createCarUseCase.execute({
-                name: "Same Car",
-                description: "Same Description",
-                daily_rate: 100,
-                license_plate: "ABC-1234",
-                fine_amount: 60,
-                brand: "Same Brand",
-                category_id: "category"
-            })
+        await createCarUseCase.execute({
+            name: "Same Car",
+            description: "Same Description",
+            daily_rate: 100,
+            license_plate: "ABC-1234",
+            fine_amount: 60,
+            brand: "Same Brand",
+            category_id: "category"
+        })
 
-         }).rejects.toBeInstanceOf(AppError)
+        await expect(createCarUseCase.execute({
+            name: "Same Car",
+            description: "Same Description",
+            daily_rate: 100,
+            license_plate: "ABC-1234",
+            fine_amount: 60,
+            brand: "Same Brand",
+            category_id: "category"
+        })
+
+        ).rejects.toEqual(new AppError("Car already exists"))
     })
 
-    it("it should be available true by default", async() => {
+    it("it should be available true by default", async () => {
         const car = await createCarUseCase.execute({
             name: "Car available",
             description: "Description available",

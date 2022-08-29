@@ -2,6 +2,7 @@ import { AppError } from "@shared/errors/AppError"
 import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory"
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase"
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase"
+import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO"
 
 let usersRepositoryInMemory: UsersRepositoryInMemory
 let authenticateUserUseCase: AuthenticateUserUseCase
@@ -35,33 +36,28 @@ describe("Authenticate User", () => {
 
     it("should not be able to authenticate a nonexisting user", async () => {
         
-        expect(async () => {
-            const user = {
-                email: "nonexistinguser@user.com",
-                password: "1234"
-            }
-
-            await authenticateUserUseCase.execute(user)
-        }).rejects.toBeInstanceOf(AppError)
+        await expect(authenticateUserUseCase.execute({
+            email: "nonexistinguser@user.com",
+            password: "1234"
+        })).rejects.toEqual(new AppError("Email or password incorrect!"))
         
     });
 
     it("should not be able to authenticate an user with incorrect password", async () => {
-        expect(async () => {
-            const user = {
-                name: "User Name",
-                password: "1234",
-                email: "user@user.com",
-                driver_license: "1234"
-            }
+        const user: ICreateUserDTO = {
+            name: "User Name",
+            password: "1234",
+            email: "user@user.com",
+            driver_license: "1234"
+        }
     
-            await createUserUseCase.execute(user)
-    
-            await authenticateUserUseCase.execute({
+        await createUserUseCase.execute(user)
+        
+        await expect(authenticateUserUseCase.execute({
                 email: user.email,
                 password: "incorrectPassword"
-            })
-        }).rejects.toBeInstanceOf(AppError) 
+                })
+        ).rejects.toEqual(new AppError("Email or password incorrect!")) 
 
     })
 })
