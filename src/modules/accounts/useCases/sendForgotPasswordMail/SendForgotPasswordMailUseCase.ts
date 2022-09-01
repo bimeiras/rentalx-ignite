@@ -22,7 +22,7 @@ class SendForgotPasswordMailUseCase {
     ) {}
 
     async execute(email: string) {
-        const user = this.usersRepository.findByEmail(email);
+        const user = await this.usersRepository.findByEmail(email);
 
         const templatePath = resolve(__dirname, "..", "..", "views", "emails", "forgotPassword.hbs")
 
@@ -34,7 +34,7 @@ class SendForgotPasswordMailUseCase {
         const expires_date = this.dateProvider.addHours(3)
 
         const variables = {
-            name: (await user).name,
+            name: user.name,
             link: `${process.env.FORGOT_MAIL_URL}${token}`
         }
 

@@ -78,6 +78,7 @@ Deve ser possível realizar a deovlução de um carro.
 **RNF**
 - O usuário deve estar logado na aplicação.
 
+
 # Recuperação de senha
 **RF**
 - Deve ser possível o usuário recuperar a senha informando o e-mail.
