@@ -6,8 +6,13 @@ import { verify, sign } from "jsonwebtoken"
 import { inject, injectable } from "tsyringe"
 
 interface IPayload {
-    sub: string
+    sub: string;
     email: string;
+}
+
+interface ITokenResponse {
+    token: string;
+    refresh_token: string;
 }
 
 @injectable()
@@ -19,7 +24,7 @@ class RefreshTokenUseCase {
         private dateProvider: IDateProvider
     ) {}
     
-    async execute(token: string): Promise<string> {
+    async execute(token: string): Promise<ITokenResponse> {
         const { email, sub} = verify(token, auth.secret_refresh_token) as IPayload;
 
         const user_id = sub;
@@ -48,7 +53,15 @@ class RefreshTokenUseCase {
             user_id
         })
 
-        return refresh_token
+        const newToken = sign({}, auth.secret_token, {
+            subject: user_id,
+            expiresIn: auth.expires_in_token
+        })
+
+        return {
+            refresh_token,
+            token: newToken
+        }
 
     }
 }
