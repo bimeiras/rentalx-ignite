@@ -11,7 +11,7 @@ import { UploadCarImagesController } from "@modules/cars/useCases/uploadImages/U
 
 import uploadConfig from "@config/upload";
 
-const upload = multer(uploadConfig.upload("./tmp/cars"))
+const upload = multer(uploadConfig)
 
 const carsRoutes = Router()
 
